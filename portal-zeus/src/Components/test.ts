@@ -1,0 +1,27 @@
+type userInfo = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  portfolioLink: string | null;
+  prefferedRole: string[];
+  referral: string | null;
+  emailUpdates: boolean;
+  percentage: number;
+  passingYear: number;
+  Qualification: string;
+  stream: string;
+  college: string;
+  city: string;
+  applicationType: string;
+  familiarTech: string[];
+  pastInterview: boolean;
+  pastRole: string | null;
+  yearsOfExperience: number | null;
+  CTC: number | null;
+  expectedCTC: number | null;
+  expertTech: string[] | null;
+  noticePeriod: boolean | null;
+  noticePeriodMonths: number | null;
+  noticePeriodDate: Date | null;
+};
