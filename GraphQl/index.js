@@ -115,4 +115,4 @@ const url = await startStandaloneServer(server, {
   listen: { port: 4452 },
 });
 
-console.log("Server Ready at Port:", 4452);
+console.log("Server Ready at Port:", url);
