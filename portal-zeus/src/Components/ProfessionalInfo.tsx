@@ -30,7 +30,6 @@ interface ProfessionalInfoProps {
   setData: (data: ProfessionalData) => void;
 }
 
-// PENDING -- Add other option to checkbox handle for both chekcbox group
 //COMPLETED -- Checkbox statefullness while swapping through the states
 //COMPLETED -- Radiobox statefullness whild swapping
 

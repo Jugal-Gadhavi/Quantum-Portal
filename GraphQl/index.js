@@ -25,19 +25,84 @@ async function getUsers() {
   });
 }
 
+async function getUserById(id) {
+  return new Promise((resolve, reject) => {
+    const queryparams = [id]
+    const query = `select * from User where User.userId = ?`;
+    connection.query(query, queryparams, function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+async function getUserByEmail(email) {
+  return new Promise((resolve, reject) => {
+    const queryparams = [email]
+    const query = `select * from User where User.email = ?`;
+    connection.query(query, queryparams, function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+async function getJobPostings() {
+  return new Promise((resolve, reject) => {
+    
+    const query = `select * from JobPosting`;
+    connection.query(query, function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+async function getJobPostingById(id) {
+  return new Promise((resolve, reject) => {
+    const queryparams = [id]
+    const query = `select * from User where JobPosting.jobId = ?`;
+    connection.query(query, queryparams, function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
 const resolvers = {
   Query: {
     async users() {
       const users = await getUsers();
       return users;
     },
-    async user(_, args) {
-      const users = await getUsers();
-      console.log(users)
-       const foundUser =  users.find( (user) => String(user.userId)  === args.id);
-       console.log(foundUser)
-       return foundUser;
+    async userById(_, args) {
+      const user = await getUserById(args.id);
+       return user[0];
     },
+    async userByEmail(_, args) {
+      const user = await getUserByEmail(args.email);
+       return user[0];
+    },
+    async jobPostings(){
+      const postings = await getJobPostings();
+      return postings;
+    },
+    async jobPostingById(_, id){
+      const postings = await getJobPostingById(args.id);
+      return postings[0];
+    }
   },
 };
 

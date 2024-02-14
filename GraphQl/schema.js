@@ -64,8 +64,11 @@ export const typeDefs = `#graphql
     type Query{
         # JobPostings: [JobPosting]
         users: [User]
-        user(id:ID!): User
-        # applications: [Application]
+        userById(id:ID!): User
+        userByEmail(email:String): User
+        jobPostings: [JobPosting]
+        jobPostingById(id: ID!): JobPosting 
+
     }
 `;
 
