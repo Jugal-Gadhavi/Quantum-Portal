@@ -1,10 +1,9 @@
 "use client";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function page() {
-
-
   const [data, setData] = useState<{
     email: string;
     password: string;
@@ -15,7 +14,7 @@ export default function page() {
 
   const login = async (e: any) => {
     e.preventDefault();
-    signIn("credentials", { ...data});
+    signIn("credentials", { ...data });
   };
 
   return (
@@ -59,16 +58,22 @@ export default function page() {
           </div>
           <div className="w-full flex justify-center">
             {" "}
-            <button type="submit" className="w-[50%] bg-green-400 p-5 rounded-md drop-shadow-lg shadow-black">
+            <button
+              type="submit"
+              className="w-[50%] bg-green-400 p-5 rounded-md drop-shadow-lg shadow-black"
+            >
               LOG IN
             </button>
           </div>
           <div className="flex flex-col w-full items-center gap-1">
             <div className="w-fit"> Not Registered yet?</div>
-            <h1 className="w-fit text-green-500 cursor-pointer">
+            <Link
+              href={"/SignUp"}
+              className="w-fit text-green-500 cursor-pointer"
+            >
               {" "}
               Create an Account
-            </h1>
+            </Link>
           </div>
         </div>
       </form>

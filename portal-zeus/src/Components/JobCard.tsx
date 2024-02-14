@@ -1,5 +1,5 @@
 import { FC } from "react";
-import LocationIcon from "../Icons/location_on_black_24dp.svg"
+import LocationIcon from "../Icons/location_on_black_24dp.svg";
 import Image from "next/image";
 
 interface JobCardProps {}
@@ -17,12 +17,7 @@ const JobCard: FC<JobCardProps> = () => {
           {" "}
           <div className="text-lg">10-Jul-2021 to 11-Jul-2021</div> |{" "}
           <div className="text-black flex items-center gap-1">
-            <Image    
-              src={LocationIcon}
-              height={20}
-              width={20}
-              alt=""
-            />
+            <Image src={LocationIcon} height={20} width={20} alt="" />
             Mumbai
           </div>
         </div>

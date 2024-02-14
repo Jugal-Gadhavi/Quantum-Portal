@@ -1,11 +1,16 @@
-import { NextAuthOptions, getServerSession } from "next-auth";
+import { NextAuthOptions, User, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
+import { resourceUsage } from "process";
 const SERVER = process.env.SERVER;
 
 export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     signIn: "/Login",
+    newUser: "/Register",
   },
   providers: [
     CredentialsProvider({
@@ -22,7 +27,7 @@ export const authOptions: NextAuthOptions = {
           placeholder: "Password",
         },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         try {
           const email = credentials?.email;
           const password = credentials?.password;
@@ -33,10 +38,13 @@ export const authOptions: NextAuthOptions = {
           };
 
           const data = await axios.post(SERVER + "/auth/checkCred", payload);
-          const user = data.data;
-          console.log("User:", user);
-
-          if (user) {
+          const dbuser = data.data;
+          const user = {
+            email: dbuser.User_Email,
+            name: dbuser.User_fullName,
+            id: dbuser.UserId,
+          };
+          if (dbuser) {
             return user;
           } else {
             return null;
@@ -48,12 +56,24 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    redirect() {
+    async jwt({ token, session, user }) {
+      if (user) {
+        token.id = token.sub;
+        token.picture = token.sub;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+        },
+      };
+    },
+    redirect({ baseUrl, url }) {
       return "/";
     },
-  },
-  session: {
-    strategy: "jwt",
   },
 
   secret: process.env.NEXTAUTH_SECRET,

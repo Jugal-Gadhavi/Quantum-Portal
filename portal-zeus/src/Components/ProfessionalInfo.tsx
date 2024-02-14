@@ -45,6 +45,8 @@ const ProfessionalInfo: FC<ProfessionalInfoProps> = ({
 
   const [profData, setProfData] = useState<ProfessionalData>(data);
 
+  const college = [["Nirma"], ["BVM"], ["Charutsat"], ["Leeds"]];
+
   const handleChangeExpertise = (e: any) => {
     const { value, checked } = e.target;
     const { expertTech } = profData;
@@ -216,15 +218,13 @@ const ProfessionalInfo: FC<ProfessionalInfoProps> = ({
                       }
                     >
                       <option value={""}>Select</option>
-                      <option value={"Birla Vishwakarma Mahavidhyalaya"}>
-                        Birla Vishwakarma Mahavidhyalaya
-                      </option>
-                      <option value={"Leeds University"}>
-                        Leeds University
-                      </option>
-                      <option value={"Nirma University"}>
-                        Nirma University
-                      </option>
+                      {college.map((singularCollege) => {
+                        return (
+                          <option value={singularCollege}>
+                            {singularCollege}
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                 </div>
