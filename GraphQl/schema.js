@@ -1,15 +1,35 @@
 export const typeDefs = `#graphql
+    type Expertise{
+        userId: ID!
+        Javascript: Int
+        NodeJs: Int
+        ReactJs: Int
+        AngularJS: Int
+    }
+    type Familiarity{
+        userId: ID!
+        Javascript: Int
+        ReactJs: Int
+        NodeJs: Int
+        AngularJs: Int
+    }
     type User{
         userId: ID!
         email: String
         fullname: String
         hashedPassword: String
+        information : Information
+        expertise : Expertise
+        familiarity : Familiarity
+        applications: [Application]
+    }
+    type Information{
         percentage: Int
         yearOfPassing: Int
         collegeName: String
         qualification: String
         stream: String
-        location: String
+        city: String
         yearOfExperience: Int
         currentCTC: Int
         expectedCTC: Int
@@ -21,27 +41,18 @@ export const typeDefs = `#graphql
         previouslyApplied: Int
         previouslyAppliedRole: String
         referrer: String
-        # expertise:{
-        #     javascript: Int
-        #     React: Int
-        #     AngularJS: Int
-        # },
-        # familiarity:{
-        #     javascript: Int
-        #     React: Int
-        #     AngularJS: Int
-        # }
+        portfolioLink: String
+        resumeLink: String
     }
-    
     type Preferences{
-        jobId: JobPosting
-        instructionalDesigner:Int
-        softwareEngineer:Int
-        qualityEngineer:Int
+        jobId: ID!
+        InstructionalDesigner:Int
+        SoftwareEngineer:Int
+        QualityEngineer:Int
     }
     type SubOpening{
         openingId: ID!
-        JobPosting: JobPosting
+        jobId: ID!
         jobRole: String
         compensation: Int
         description: String
@@ -52,23 +63,54 @@ export const typeDefs = `#graphql
         startDate: String
         expirationDate: String
         location: String  
-        subOpening: [SubOpening]
+        subOpenings: [SubOpening]
+        preferences: Preferences
     }
     type Application{
-        applicationId: String
-        opening: SubOpening
-        user: User
+        applicationId: ID!
+        openingId : ID!
+        userId: ID!
         timeSlot: String
         resume: String
     }
     type Query{
-        # JobPostings: [JobPosting]
         users: [User]
         userById(id:ID!): User
         userByEmail(email:String): User
         jobPostings: [JobPosting]
         jobPostingById(id: ID!): JobPosting 
-
+        familiarity: [Familiarity]
     }
+    type Mutation{
+        addApplication(application:addApplicationInput): Application
+        changeInformation(object:changeInformationInput) : Information
+    },
+    input addApplicationInput{
+        openingId : ID!
+        userId: ID!
+        timeSlot: String
+    }
+    input changeInformationInput{
+        userId: ID!
+        percentage: Int
+        yearOfPassing: Int
+        collegeName: String
+        qualification: String
+        stream: String
+        city: String
+        yearOfExperience: Int
+        currentCTC: Int
+        expectedCTC: Int
+        phoneNumber: String
+        applicantType: String
+        noticePeriod: Int
+        noticePeriodDuration: Int
+        noticePeriodEnd: String
+        previouslyApplied: Int
+        previouslyAppliedRole: String
+        referrer: String
+        portfolioLink: String
+        resumeLink: String
+    }
+  
 `;
-
