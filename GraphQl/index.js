@@ -166,12 +166,86 @@ async function getPreferences(id) {
 
 async function addApplicationFunc(object) {
   return new Promise((resolve, reject) => {
-    const queryparams = [
-      object.openingId,
-      object.userId,
-      object.timeSlot,
-    ];
+    const queryparams = [object.openingId, object.userId, object.timeSlot];
     const query = `INSERT INTO Application (openingId, userId, timeSlot) VALUES ( ?, ?, ?);`;
+    connection.query(query, queryparams, function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+async function changeInformationFunc(id, obj) {
+  return new Promise((resolve, reject) => {
+    const queryparams = [
+      id,
+      obj.applicantType,
+      obj.yearsOfExperience,
+      obj.currentCTC,
+      obj.expectedCTC,
+      obj.noticePeriod,
+      obj.noticePeriodDuration,
+      obj.noticePeriodEnd,
+      obj.previouslyApplied,
+      obj.previouslyAppliedRole,
+      obj.referrer,
+      obj.percentage,
+      obj.yearOfPassing,
+      obj.collegeName,
+      obj.qualification,
+      obj.stream,
+      obj.city,
+      obj.phoneNumber,
+      obj.portfolioLink,
+      obj.resumeLink,
+      
+    ];
+    const query = `
+    INSERT INTO Information (
+      userId,
+      applicantType,
+      yearsOfExperience,
+      currentCTC,
+      expectedCTC,
+      noticePeriod,
+      noticePeriodDuration,
+      noticePeriodEnd,
+      previouslyApplied,
+      previouslyAppliedRole,
+      referrer,
+      percentage,
+      yearOfPassing,
+      collegeName,
+      qualification,
+      stream,
+      city,
+      phoneNumber,
+      portfolioLink,
+      resumeLink
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  ON DUPLICATE KEY UPDATE
+      applicantType = VALUES(applicantType),
+      yearsOfExperience = VALUES(yearsOfExperience),
+      currentCTC = VALUES(currentCTC),
+      expectedCTC = VALUES(expectedCTC),
+      noticePeriod = VALUES(noticePeriod),
+      noticePeriodDuration = VALUES(noticePeriodDuration),
+      noticePeriodEnd = VALUES(noticePeriodEnd),
+      previouslyApplied = VALUES(previouslyApplied),
+      previouslyAppliedRole = VALUES(previouslyAppliedRole),
+      referrer = VALUES(referrer),
+      percentage = VALUES(percentage),
+      yearOfPassing = VALUES(yearOfPassing),
+      collegeName = VALUES(collegeName),
+      qualification = VALUES(qualification),
+      stream = VALUES(stream),
+      city = VALUES(city),
+      phoneNumber = VALUES(phoneNumber),
+      portfolioLink = VALUES(portfolioLink),
+      resumeLink = VALUES(resumeLink);`;
     connection.query(query, queryparams, function (err, res) {
       if (err) {
         reject(err);
@@ -236,15 +310,16 @@ const resolvers = {
   Mutation: {
     async addApplication(_, args) {
       console.log(args.application);
-      await addApplicationFunc(args.application)
-      args.application.applicationId = 'Returned'
+      await addApplicationFunc(args.application);
+      args.application.applicationId = "Returned";
       return args.application;
     },
-    async changeInformation(_, args){
-      console.log(args)
-      await changeInfoFunction(args.object)
-      return args.object
-    }
+    async changeInformation(_, args) {
+      const res = await changeInformationFunc(args.id, args.object);
+      console.log('res',res);
+      const obj = await getInformation(args.id);
+      return obj[0];
+    },
   },
 };
 

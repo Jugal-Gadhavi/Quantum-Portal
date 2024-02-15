@@ -30,7 +30,7 @@ export const typeDefs = `#graphql
         qualification: String
         stream: String
         city: String
-        yearOfExperience: Int
+        yearsOfExperience: Int
         currentCTC: Int
         expectedCTC: Int
         phoneNumber: String
@@ -83,7 +83,7 @@ export const typeDefs = `#graphql
     }
     type Mutation{
         addApplication(application:addApplicationInput): Application
-        changeInformation(object:changeInformationInput) : Information
+        changeInformation(id: ID! , object:changeInformationInput) : Information
     },
     input addApplicationInput{
         openingId : ID!
@@ -91,7 +91,6 @@ export const typeDefs = `#graphql
         timeSlot: String
     }
     input changeInformationInput{
-        userId: ID!
         percentage: Int
         yearOfPassing: Int
         collegeName: String
