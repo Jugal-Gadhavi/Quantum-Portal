@@ -12,13 +12,13 @@ type ProfessionalData = {
   city: string;
   applicationType: string;
   familiarTech: string[];
-  pastInterview: boolean;
+  pastInterview: Number;
   pastRole: string | null;
   yearsOfExperience: number | null;
   CTC: number | null;
   expectedCTC: number | null;
   expertTech: string[] | null;
-  noticePeriod: boolean | null;
+  noticePeriod: Number | null;
   noticePeriodMonths: number | null;
   noticePeriodDate: string | null;
 };
@@ -495,12 +495,12 @@ const ProfessionalInfo: FC<ProfessionalInfoProps> = ({
                           <input
                             type="Radio"
                             name="Notice"
-                            defaultChecked={notice!}
+                            defaultChecked={notice == 0 ? false : true}
                             value={"Yes"}
                             onChange={(e) =>
                               setProfData({
                                 ...profData,
-                                noticePeriod: true,
+                                noticePeriod: 1,
                               })
                             }
                             className="h-[15px] aspect-square accent-green-700"
@@ -511,12 +511,12 @@ const ProfessionalInfo: FC<ProfessionalInfoProps> = ({
                           <input
                             type="Radio"
                             name="Notice"
-                            defaultChecked={!notice!}
+                            defaultChecked={notice == 1 ? false : true}
                             value={"No"}
                             onChange={(e) =>
                               setProfData({
                                 ...profData,
-                                noticePeriod: false,
+                                noticePeriod: 0,
                               })
                             }
                             className="h-[15px] aspect-square accent-green-700"
@@ -581,11 +581,11 @@ const ProfessionalInfo: FC<ProfessionalInfoProps> = ({
                         type="Radio"
                         name="post"
                         value={"Yes"}
-                        defaultChecked={previous}
+                        defaultChecked={previous == 1 ? true : false}
                         onChange={(e) => {
                           setProfData({
                             ...profData,
-                            pastInterview: true,
+                            pastInterview: 1,
                           });
                         }}
                         className="h-[15px] aspect-square accent-green-700"
@@ -596,12 +596,12 @@ const ProfessionalInfo: FC<ProfessionalInfoProps> = ({
                       <input
                         type="Radio"
                         name="post"
-                        defaultChecked={!previous}
+                        defaultChecked={previous == 0 ? true : false}
                         value={"No"}
                         onChange={(e) => {
                           setProfData({
                             ...profData,
-                            pastInterview: false,
+                            pastInterview: 0,
                           });
                         }}
                         className="h-[15px] aspect-square accent-green-700"

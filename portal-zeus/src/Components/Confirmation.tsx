@@ -9,13 +9,13 @@ type ProfessionalData = {
   city: string;
   applicationType: string;
   familiarTech: string[];
-  pastInterview: boolean;
+  pastInterview: Number;
   pastRole: string | null;
   yearsOfExperience: number | null;
   CTC: number | null;
   expectedCTC: number | null;
   expertTech: string[] | null;
-  noticePeriod: boolean | null;
+  noticePeriod: Number | null;
   noticePeriodMonths: number | null;
   noticePeriodDate: string | null;
 };
@@ -290,7 +290,7 @@ const Confirmation: FC<ConfirmationProps> = ({
             <div className="text-xl px-1">
               {professionalData.noticePeriod == null
                 ? "-"
-                : professionalData.noticePeriod == false
+                : professionalData.noticePeriod == 0
                 ? "No"
                 : "Yes"}
             </div>

@@ -7,10 +7,52 @@ import PersonalInfoRegister from "@/Components/PersonalInfoRegister";
 import ProfessionalInfo from "@/Components/ProfessionalInfo";
 import Confirmation from "@/Components/Confirmation";
 import { useSession } from "next-auth/react";
+import { gql, useMutation } from "@apollo/client";
+import client from "@/Lib/apollo";
+import { useRouter } from "next/navigation";
+
+const INFORMATION = gql`
+  mutation Register($id: ID!, $object: changeInformationInput) {
+    changeInformation(id: $id, object: $object) {
+      applicantType
+      city
+    }
+  }
+`;
 
 export default function page() {
+  const router = useRouter();
+  const [updateInfo] = useMutation(INFORMATION, { client: client });
   const sesh = useSession();
-  function handleSubmit() {}
+  function handleSubmit() {
+    updateInfo({
+      variables: {
+        id: sesh.data?.user.image,
+        object: {
+          city: profData.city,
+          applicantType: profData.applicationType,
+          percentage: profData.percentage,
+          yearOfPassing: profData.passingYear,
+          collegeName: profData.college,
+          stream: profData.stream,
+          qualification: profData.Qualification,
+          yearOfExperience: profData.yearsOfExperience,
+          currentCTC: profData.CTC,
+          expectedCTC: profData.expectedCTC,
+          phoneNumber: `${persData.countryCode}+ ${persData.phoneNumber}`,
+          noticePeriod: profData.noticePeriod,
+          noticePeriodDuration: profData.noticePeriodMonths,
+          noticePeriodEnd: profData.noticePeriodDate,
+          previouslyApplied: profData.pastInterview,
+          previouslyAppliedRole: profData.pastRole,
+          referrer: persData.refferer,
+          portfolioLink: persData.portfolio,
+          resumeLink: "",
+        },
+      },
+    });
+    router.push("/");
+  }
 
   type ProfessionalData = {
     percentage: number;
@@ -21,13 +63,13 @@ export default function page() {
     city: string;
     applicationType: string;
     familiarTech: string[];
-    pastInterview: boolean;
+    pastInterview: Number;
     pastRole: string | null;
     yearsOfExperience: number | null;
     CTC: number | null;
     expectedCTC: number | null;
     expertTech: string[] | null;
-    noticePeriod: boolean | null;
+    noticePeriod: Number | null;
     noticePeriodMonths: number | null;
     noticePeriodDate: string | null;
   };
@@ -65,13 +107,13 @@ export default function page() {
     city: "",
     applicationType: "Fresher",
     familiarTech: [],
-    pastInterview: false,
+    pastInterview: 0,
     pastRole: null,
     yearsOfExperience: null,
     CTC: null,
     expectedCTC: null,
     expertTech: null,
-    noticePeriod: false,
+    noticePeriod: 0,
     noticePeriodMonths: null,
     noticePeriodDate: null,
   });
