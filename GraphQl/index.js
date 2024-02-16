@@ -96,6 +96,7 @@ async function getJobPostings() {
 
 async function getJobPostingById(id) {
   return new Promise((resolve, reject) => {
+  
     const queryparams = [id];
     const query = `select * from JobPosting where JobPosting.jobId = ?`;
     connection.query(query, queryparams, function (err, res) {
@@ -274,7 +275,7 @@ const resolvers = {
       const postings = await getJobPostings();
       return postings;
     },
-    async jobPostingById(_, id) {
+    async jobPostingById(_, args) {
       const postings = await getJobPostingById(args.id);
       return postings[0];
     },

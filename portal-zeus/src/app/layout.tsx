@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import Providers from "@/Components/sessionhook";
 
-const inter = Inter({ subsets: ["latin"] });
 const quicksand = Quicksand({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,10 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={quicksand.className}>
         <Providers>
-         
-            <Navbar />
-            <div className="pt-14">{children}</div>
-       
+          <Navbar />
+          <div className="pt-14">{children}</div>
         </Providers>
       </body>
     </html>

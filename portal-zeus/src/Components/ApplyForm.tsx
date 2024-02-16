@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { FC } from "react";
-import UploadIcon from "../Icons/Upload_black_24dp.svg"
+import UploadIcon from "../Icons/Upload_black_24dp.svg";
 
 interface ApplyFormProps {}
 
-const ApplyForm: FC<ApplyFormProps> = async () => {
+const ApplyForm: FC<ApplyFormProps> = () => {
   return (
     <div className="mx-4 p-4 bg-white flex flex-col gap-4 font-semibold">
       <div className="text-xl">Time Slot and Preference:</div>
@@ -61,11 +61,15 @@ const ApplyForm: FC<ApplyFormProps> = async () => {
 
         <div className="flex gap-3 items-center p-2 stroke-green-500">
           <button className=" text-green-600 flex justify-center gap-5 items-center text-xl">
-          <Image className="-hue-rotate-90" src={UploadIcon} height={30} alt="" />
-          UPLOAD AN UPDATED RESUME
+            <Image
+              className="-hue-rotate-90"
+              src={UploadIcon}
+              height={30}
+              alt=""
+            />
+            UPLOAD AN UPDATED RESUME
           </button>
         </div>
-
       </div>
     </div>
   );

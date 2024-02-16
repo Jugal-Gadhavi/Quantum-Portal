@@ -6,8 +6,12 @@ import { cn } from "@/Lib/utils";
 import PersonalInfoRegister from "@/Components/PersonalInfoRegister";
 import ProfessionalInfo from "@/Components/ProfessionalInfo";
 import Confirmation from "@/Components/Confirmation";
+import { useSession } from "next-auth/react";
 
 export default function page() {
+  const sesh = useSession();
+  function handleSubmit() {}
+
   type ProfessionalData = {
     percentage: number;
     passingYear: number;
@@ -101,6 +105,7 @@ export default function page() {
             CANCEL
           </button>
           <button
+            onClick={handleSubmit}
             className={cn("bg-[#3FD28B] px-4 py-1 rounded md text-slate-900", {
               "bg-[#3fd28b88]": tab <= 2,
             })}
